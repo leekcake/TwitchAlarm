@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchAlarmShared", "TwitchAlarmShared\TwitchAlarmShared.csproj", "{A1B0D2F9-1042-4BA1-838A-D04286C4EB16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchAlarmDesktop", "TwitchAlarmDesktop\TwitchAlarmDesktop.csproj", "{1952E0F5-BC07-44A4-8039-7E1C5D3D3E8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchAlarmAndroid", "TwitchAlarmAndroid\TwitchAlarmAndroid.csproj", "{D11620FE-5BC9-448E-B53C-2D562EDE6B33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B0D2F9-1042-4BA1-838A-D04286C4EB16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B0D2F9-1042-4BA1-838A-D04286C4EB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B0D2F9-1042-4BA1-838A-D04286C4EB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B0D2F9-1042-4BA1-838A-D04286C4EB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1952E0F5-BC07-44A4-8039-7E1C5D3D3E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1952E0F5-BC07-44A4-8039-7E1C5D3D3E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1952E0F5-BC07-44A4-8039-7E1C5D3D3E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1952E0F5-BC07-44A4-8039-7E1C5D3D3E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D11620FE-5BC9-448E-B53C-2D562EDE6B33}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9021D3B-E030-4D5A-84DB-88031870EA4C}
+	EndGlobalSection
+EndGlobal
