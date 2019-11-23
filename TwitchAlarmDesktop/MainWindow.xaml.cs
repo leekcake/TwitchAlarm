@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using TwitchAlarmDesktop.Windows;
 using TwitchAlarmShared.Container;
 using TwitchAlarmShared.Worker;
 
@@ -26,6 +27,8 @@ namespace TwitchAlarmDesktop
         private StreamerData selectedData;
 
         private List<StreamerData> filteredData = new List<StreamerData>();
+
+        private AlarmWindow lastAlarmWindow;
 
         public MainWindow()
         {
@@ -208,6 +211,27 @@ namespace TwitchAlarmDesktop
 
             StreamerListBox.ItemsSource = null;
             StreamerListBox.ItemsSource = filteredData;
+        }
+
+        private void TestNotifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckForSelectedItem()) return;
+
+            lastAlarmWindow = new AlarmWindow();
+            lastAlarmWindow.InitWithStreamerData(selectedData);
+            if( selectedData.PreventPopup || (PreventPopupAllCheckBox.IsChecked.HasValue && PreventPopupAllCheckBox.IsChecked.Value) )
+            {
+                return;
+            }
+            lastAlarmWindow.Show();
+        }
+
+        private void Root_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(lastAlarmWindow != null && !lastAlarmWindow.IsClosed)
+            {
+                lastAlarmWindow.Show();
+            }
         }
     }
 }

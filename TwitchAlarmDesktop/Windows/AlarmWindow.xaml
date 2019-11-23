@@ -1,0 +1,14 @@
+﻿<Window x:Class="TwitchAlarmDesktop.Windows.AlarmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TwitchAlarmDesktop.Windows"
+        mc:Ignorable="d"
+        Title="와! 방송이 켜졌어요!!" Height="216" Width="414.5">
+    <Grid>
+        <TextBlock x:Name="ContentTextBlock" Text="님의 방송이 켜졌습니다!" Margin="10,10,10,54"/>
+        <Button Content="알겠습니다" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="39" Click="Button_Click"/>
+
+    </Grid>
+</Window>

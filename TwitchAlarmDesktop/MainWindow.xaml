@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TwitchAlarmDesktop"
         Name="Root"
         mc:Ignorable="d"
-        Title="트위치 알람" Height="449.248" Width="769.82">
+        Title="트위치 알람" Height="449.248" Width="769.82" GotFocus="Root_GotFocus">
     <Grid>
         <Grid.Resources>
             <Style x:Key="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
@@ -50,7 +50,7 @@
             <Bold></Bold> 이경우에도 알림 소리는 정상적으로 울리게 됩니다.
         </TextBlock>
         <CheckBox x:Name="PreventPopupAllCheckBox" Content="모든 스트리머를 알릴때 새 창을 표시하지 않음 (게임 모드?)" HorizontalAlignment="Left" Margin="167,164,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="TestNotifyButton" Content="알림 테스트" HorizontalAlignment="Left" Margin="395,388,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="TestNotifyButton" Content="알림 테스트" HorizontalAlignment="Left" Margin="395,388,0,0" VerticalAlignment="Top" Width="75" Click="TestNotifyButton_Click"/>
         <Button x:Name="AdButton" Content="프로그램 정보" HorizontalAlignment="Left" Margin="670,388,0,0" VerticalAlignment="Top" Width="82"/>
 
     </Grid>
