@@ -4,9 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TwitchAlarmDesktop"
+        Name="MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="트위치 알람" Height="449.248" Width="769.82">
     <Grid>
-        
+        <Button x:Name="AddStreamerButton" Content="스트리머 추가" HorizontalAlignment="Left" Margin="167,388,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label x:Name="Idlabel" Content="스트리머 아이디: " Margin="167,10,10,0" VerticalAlignment="Top"/>
+        <Label x:Name="DisplayNameLabel" Content="스트리머 이름: " Margin="167,41,10,0" VerticalAlignment="Top"/>
+        <Line     X1="0" Y1="0"  
+    X2="{Binding ElementName=MainWindow, Path=Width}" Y2="0"  
+    Stroke="Black"  
+    StrokeThickness="2" Margin="167,164,0,249" HorizontalAlignment="Left" Width="585"></Line>
+        <CheckBox x:Name="UseNotifyCheckBox" Content="이 스트리머의 방송을 알리기" HorizontalAlignment="Left" Margin="167,124,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="OpenStreamerPageButton" Content="스트리머 페이지 열기" HorizontalAlignment="Left" Margin="257,388,0,0" VerticalAlignment="Top" Width="133"/>
+        <CheckBox x:Name="PreventPopupCheckBox" Content="이 스트리머를 알릴때 새 창을 표시하지 않음" HorizontalAlignment="Left" Margin="167,144,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="StreamerListBox" HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="152"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,364,0,0" TextWrapping="Wrap" Text="스트리머 이름으로 검색" VerticalAlignment="Top"/>
+        <TextBox x:Name="FilterStreamerTextBox" HorizontalAlignment="Left" Height="23" Margin="10,385,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <Label x:Name="NotifySoundPathLabel" Content="알림음 파일:" Margin="167,67,10,0" VerticalAlignment="Top"/>
+        <Label x:Name="NotifySoundRepeatCountLabel" Content="알림음을 재생할 횟수: " Margin="167,93,10,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="167,189,0,0" VerticalAlignment="Top" Height="170" Width="585">
+            스트리머 추가 버튼을 통해 스트리머를 추가할 수 있습니다.<LineBreak></LineBreak>
+            추가된 스트리머를 오른쪽에서 더블클릭 하는것으로, 스트리머를 지울 수 있습니다<LineBreak></LineBreak>
+            스트리머 이름, 알림음 파일 및 재생 횟수를 더블 클릭 하면 값을 수정할 수 있습니다,<LineBreak></LineBreak>
+            <Bold></Bold> 아이디를 잘 못 적은경우에는 삭제후 다시 만들어야 합니다<LineBreak></LineBreak>
+            방송을 알리기가 활성화 된 스트리머만 알림이 울립니다!<LineBreak></LineBreak>
+            새 창을 표시하지 않음을 체크한경우, 이 창이 활성화 되기 전까지 알림창이 뜨지 않습니다.<LineBreak></LineBreak>
+            <Bold></Bold> 이경우에도 알림 소리는 정상적으로 울리게 됩니다.
+        </TextBlock>
+        <CheckBox x:Name="PreventPopupAllCheckBox" Content="모든 스트리머를 알릴때 새 창을 표시하지 않음 (게임 모드?)" HorizontalAlignment="Left" Margin="167,169,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="TestNotifyButton" Content="알림 테스트" HorizontalAlignment="Left" Margin="395,388,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="AdButton" Content="프로그램 정보" HorizontalAlignment="Left" Margin="670,388,0,0" VerticalAlignment="Top" Width="82"/>
+
     </Grid>
 </Window>
