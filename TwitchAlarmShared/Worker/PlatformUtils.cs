@@ -13,5 +13,11 @@ namespace TwitchAlarmShared.Worker
         public abstract byte[] ReadAllBytes(string path);
 
         public abstract string GetConfigBasePath();
+
+        public abstract void EnsureDirectory(string path);
+
+        public abstract void DeleteFile(string path);
+
+        public abstract string[] GetFiles(string path);
     }
 }

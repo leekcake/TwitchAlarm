@@ -10,9 +10,25 @@ namespace TwitchAlarmDesktop.Container
 {
     public class DesktopPlatformUtils : PlatformUtils
     {
+        public override void DeleteFile(string path)
+        {
+            File.Delete(path);
+        }
+
+        public override void EnsureDirectory(string path)
+        {
+            if (Directory.Exists(path)) return;
+            Directory.CreateDirectory(path);
+        }
+
         public override string GetConfigBasePath()
         {
             return "config";
+        }
+
+        public override string[] GetFiles(string path)
+        {
+            return Directory.GetFiles(path);
         }
 
         public override byte[] ReadAllBytes(string path)
