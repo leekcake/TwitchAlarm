@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +23,7 @@ namespace TwitchAlarmDesktop
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, StreamerDetector.Listener
     {
         private StreamerDetector detector = new StreamerDetector();
         private StreamerData selectedData;
@@ -30,12 +32,69 @@ namespace TwitchAlarmDesktop
 
         private AlarmWindow lastAlarmWindow;
 
+        private bool isClosed = false;
+
         public MainWindow()
         {
             InitializeComponent();
 
             detector.LoadStreamers();
             RefreshFilteredList();
+
+            detector.TryToReadToken();
+            if(detector.TokenNotReady)
+            {
+                AuthSelf();
+            }
+            detector.StartListener = this;
+
+            Closed += MainWindow_Closed;
+            CheckTask();
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            isClosed = true;
+        }
+
+        public async Task CheckTask()
+        {
+            var fire = false;
+
+            while(!isClosed)
+            {
+                await detector.Check(fire);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    RefreshFilteredList();
+                });
+                for(int i = 0; i < 30; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        LeftTimeLabel.Content = $"다음 갱신 까지: {30 - i}초";
+                    });
+                    await Task.Delay(1000);
+                }
+                
+                fire = true;
+            }
+        }
+
+        public void AuthSelf()
+        {
+            TwitchSelfServer self = new TwitchSelfServer();
+            self.Start();
+
+            string url = String.Format("https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={0}&redirect_uri=http://localhost:8080/twitch/callback&state=123456", TwitchID.ID);
+            Process.Start(url);
+
+            while(self.ReceivedResponse == null)
+            {
+                Thread.Sleep(1000);
+            }
+
+            detector.SetToken(self.ReceivedResponse);
         }
 
         private void StreamerListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -165,6 +224,15 @@ namespace TwitchAlarmDesktop
                 MessageBox.Show("스트리머 아이디는 공백일 수 없습니다", "트위치 알림");
                 return;
             }
+            try
+            {
+                streamer.InternalId = detector.Twitch.Helix.Users.GetUsersAsync(logins: new List<string>(new string[] { streamer.Id })).Result.Users[0].Id;
+            }
+            catch
+            {
+                MessageBox.Show("대상 아이디의 정보를 트위치에서 가져올 수 없었습니다", "트위치 알림");
+                return;
+            }
             detector.AddNewStreamer(streamer);
             detector.SaveStreamer(streamer);
             RefreshFilteredList();
@@ -199,6 +267,7 @@ namespace TwitchAlarmDesktop
 
         private void RefreshFilteredList()
         {
+            var inx = StreamerListBox.SelectedIndex;
             filteredData.Clear();
             foreach(var streamer in detector.Streamers)
             {
@@ -211,15 +280,35 @@ namespace TwitchAlarmDesktop
 
             StreamerListBox.ItemsSource = null;
             StreamerListBox.ItemsSource = filteredData;
+
+            try
+            {
+                StreamerListBox.SelectedIndex = inx;
+            }
+            catch
+            {
+
+            }
         }
 
         private void TestNotifyButton_Click(object sender, RoutedEventArgs e)
         {
             if (!CheckForSelectedItem()) return;
+            selectedData.IsInBroadcasting = false;
+            detector.Check(true);
+            //FireAlarm(selectedData);
+        }
+
+        public void FireAlarm(StreamerData data)
+        {
+            if(lastAlarmWindow != null && !lastAlarmWindow.IsClosed)
+            {
+                return;
+            }
 
             lastAlarmWindow = new AlarmWindow();
-            lastAlarmWindow.InitWithStreamerData(selectedData);
-            if( selectedData.PreventPopup || (PreventPopupAllCheckBox.IsChecked.HasValue && PreventPopupAllCheckBox.IsChecked.Value) )
+            lastAlarmWindow.InitWithStreamerData(data);
+            if (data.PreventPopup || (PreventPopupAllCheckBox.IsChecked.HasValue && PreventPopupAllCheckBox.IsChecked.Value))
             {
                 return;
             }
@@ -232,6 +321,17 @@ namespace TwitchAlarmDesktop
             {
                 lastAlarmWindow.Show();
             }
+        }
+
+        public void OnBroadcastStartup(StreamerData data)
+        {
+            FireAlarm(data);
+        }
+
+        private void TestNotifyButtonDirectly_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckForSelectedItem()) return;
+            FireAlarm(selectedData);
         }
     }
 }

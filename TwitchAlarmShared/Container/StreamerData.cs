@@ -14,6 +14,11 @@ namespace TwitchAlarmShared.Container
         [JsonProperty]
         public string Id { get; set; }
         /// <summary>
+        /// 스트리머의 트위치 내부 아이디 (숫자)
+        /// </summary>
+        [JsonProperty]
+        public string InternalId { get; set; } = "";
+        /// <summary>
         /// 스트리머의 표시 이름 (유닉혼)
         /// </summary>
         [JsonProperty]
@@ -43,6 +48,11 @@ namespace TwitchAlarmShared.Container
         /// 이 스트리머가 방송중인지의 여부
         /// </summary>
         public bool IsInBroadcasting = false;
+
+        /// <summary>
+        /// 작업용 변수, Check 명령에서 이 데이터가 방송중인걸로 설정되었는지의 여부를 설정합니다
+        /// </summary>
+        public bool IsLiveDetectedOnTick = false;
 
         
         public string IsInBroadcastingString

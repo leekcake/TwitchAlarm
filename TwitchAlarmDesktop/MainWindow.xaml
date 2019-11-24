@@ -24,7 +24,7 @@
                 </Setter>
             </Style>
         </Grid.Resources>
-        
+
         <Button x:Name="AddStreamerButton" Content="스트리머 추가" HorizontalAlignment="Left" Margin="167,388,0,0" VerticalAlignment="Top" Width="85" Click="AddStreamerButton_Click"/>
         <Label x:Name="Idlabel" Content="스트리머 아이디: " Margin="167,10,10,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="DisplayNameLabel" Content="스트리머 이름: " Margin="167,36,10,0" VerticalAlignment="Top" MouseDoubleClick="DisplayNameLabel_MouseDoubleClick"/>
@@ -40,7 +40,7 @@
         <TextBox x:Name="FilterStreamerTextBox" HorizontalAlignment="Left" Height="23" Margin="10,385,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
         <Label x:Name="NotifySoundPathLabel" Content="알림음 파일:" Margin="167,62,10,0" VerticalAlignment="Top" MouseDoubleClick="NotifySoundPathLabel_MouseDoubleClick"/>
         <Label x:Name="NotifySoundRepeatCountLabel" Content="알림음을 재생할 횟수: " Margin="167,88,10,0" VerticalAlignment="Top" MouseDoubleClick="NotifySoundRepeatCountLabel_MouseDoubleClick"/>
-        <TextBlock HorizontalAlignment="Left" Margin="167,184,0,0" VerticalAlignment="Top" Height="175" Width="585">
+        <TextBlock HorizontalAlignment="Left" Margin="167,184,0,0" VerticalAlignment="Top" Height="117" Width="585">
             스트리머 추가 버튼을 통해 스트리머를 추가할 수 있습니다.<LineBreak></LineBreak>
             추가된 스트리머를 오른쪽에서 더블클릭 하는것으로, 스트리머를 지울 수 있습니다<LineBreak></LineBreak>
             스트리머 이름, 알림음 파일 및 재생 횟수를 더블 클릭 하면 값을 수정할 수 있습니다,<LineBreak></LineBreak>
@@ -52,6 +52,8 @@
         <CheckBox x:Name="PreventPopupAllCheckBox" Content="모든 스트리머를 알릴때 새 창을 표시하지 않음 (게임 모드?)" HorizontalAlignment="Left" Margin="167,164,0,0" VerticalAlignment="Top"/>
         <Button x:Name="TestNotifyButton" Content="알림 테스트" HorizontalAlignment="Left" Margin="395,388,0,0" VerticalAlignment="Top" Width="75" Click="TestNotifyButton_Click"/>
         <Button x:Name="AdButton" Content="프로그램 정보" HorizontalAlignment="Left" Margin="670,388,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="LeftTimeLabel" Content="초기 갱신..." Margin="167,343,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="TestNotifyButtonDirectly" Content="볼륨 테스트" HorizontalAlignment="Left" Margin="395,363,0,0" VerticalAlignment="Top" Width="75" Click="TestNotifyButtonDirectly_Click"/>
 
     </Grid>
 </Window>
