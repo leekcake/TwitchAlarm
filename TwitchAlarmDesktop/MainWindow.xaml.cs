@@ -125,6 +125,8 @@ namespace TwitchAlarmDesktop
         private void PreventPopupCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!CheckForSelectedItem()) return;
+            if (!selectedData.PreventPopup) return;
+
             selectedData.PreventPopup = false;
             detector.SaveStreamer(selectedData);
         }
@@ -132,6 +134,8 @@ namespace TwitchAlarmDesktop
         private void PreventPopupCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (!CheckForSelectedItem()) return;
+            if (selectedData.PreventPopup) return;
+
             selectedData.PreventPopup = true;
             detector.SaveStreamer(selectedData);
         }
@@ -139,15 +143,27 @@ namespace TwitchAlarmDesktop
         private void UseNotifyCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (!CheckForSelectedItem()) return;
+            if (selectedData.UseNotify) return;
+
+            if ( !detector.CheckNotifyLimit() && !selectedData.UseNotify )
+            {
+                MessageBox.Show("알림을 확인할 수 있는 스트리머의 최대치는 100명입니다.\r\n그것보다, 100명 이상의 스트리머의 방송 시작을 모닝콜로 사용하는 당신의 인생은 안녕하신가요...?");
+                UseNotifyCheckBox.IsChecked = false;
+                return;
+            }
             selectedData.UseNotify = true;
             detector.SaveStreamer(selectedData);
+            RefreshFilteredList();
         }
 
         private void UseNotifyCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!CheckForSelectedItem()) return;
+            if (!selectedData.UseNotify) return;
+
             selectedData.UseNotify = false;
             detector.SaveStreamer(selectedData);
+            RefreshFilteredList();
         }
 
         private void NotifySoundRepeatCountLabel_MouseDoubleClick(object sender, MouseButtonEventArgs e)

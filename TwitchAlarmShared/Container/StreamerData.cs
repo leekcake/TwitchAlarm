@@ -59,6 +59,7 @@ namespace TwitchAlarmShared.Container
         {
             get
             {
+                if (!UseNotify) return " (비활성화)";
                 if (IsInBroadcasting) return " (방송중)";
                 return "";
             }

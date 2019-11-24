@@ -101,11 +101,11 @@ namespace TwitchAlarmShared.Worker
 
         public void AddNewStreamer(StreamerData streamer)
         {
-            Streamers.Add(streamer);
-            if(Streamers.Count >= 100)
+            if(!CheckNotifyLimit())
             {
-                throw new Exception("Too many streamer :(");
+                streamer.UseNotify = false;
             }
+            Streamers.Add(streamer);            
         }
 
         public void SaveStreamer(StreamerData streamer)
@@ -137,12 +137,17 @@ namespace TwitchAlarmShared.Worker
             }
         }
 
+        public bool CheckNotifyLimit()
+        {
+            return Streamers.FindAll(t => t.UseNotify).Count < 100;
+        }
+
         public async Task Check(bool fire)
         {
             if (Streamers.Count == 0) return;
             try
             {
-                var response = await Twitch.Helix.Streams.GetStreamsAsync(userLogins: new List<string>(Streamers.Select(t => t.Id)));
+                var response = await Twitch.Helix.Streams.GetStreamsAsync(userLogins: new List<string>(Streamers.FindAll(t => t.UseNotify).Select(t => t.Id)));
                 foreach (var stream in response.Streams)
                 {
                     var data = Streamers.Find(t => t.InternalId == stream.UserId);
