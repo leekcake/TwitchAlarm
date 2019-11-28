@@ -110,6 +110,19 @@ namespace TwitchAlarmAndroid
             StartActivity(new Intent(this, typeof(AlarmActivity)));
         }
 
+        protected override void OnStop()
+        {
+            try
+            {
+                previewPlayer.Stop();
+            }
+            catch
+            {
+
+            }
+            base.OnStop();
+        }
+
         protected override void OnDestroy()
         {
             streamerData = null;

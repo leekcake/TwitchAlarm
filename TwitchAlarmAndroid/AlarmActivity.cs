@@ -51,6 +51,19 @@ namespace TwitchAlarmAndroid
             }
         }
 
+        protected override void OnStop()
+        {
+            try
+            {
+                alarmPlayer.Stop();
+            }
+            catch
+            {
+
+            }
+            base.OnStop();
+        }
+
         protected override void OnDestroy()
         {
             try
