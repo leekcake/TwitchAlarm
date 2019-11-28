@@ -16,7 +16,7 @@ using Uri = Android.Net.Uri;
 
 namespace TwitchAlarmAndroid
 {
-    [Activity(Label = "AlarmActivity", LaunchMode =Android.Content.PM.LaunchMode.SingleTask)]
+    [Activity(Label = "AlarmActivity")]
     public class AlarmActivity : Activity
     {
         public static StreamerData alarmTarget;
@@ -28,6 +28,10 @@ namespace TwitchAlarmAndroid
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.activity_alarm);
+            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
+                WindowManagerFlags.DismissKeyguard |
+                WindowManagerFlags.ShowWhenLocked |
+                WindowManagerFlags.TurnScreenOn);
 
             Title = GetString(Resource.String.alarm_title).Replace("/NAME/", alarmTarget.DisplayName);
 
@@ -54,11 +58,24 @@ namespace TwitchAlarmAndroid
             }
         }
 
+        protected override void OnResume()
+        {
+            try
+            {
+                alarmPlayer.Start();
+            }
+            catch
+            {
+
+            }
+            base.OnResume();
+        }
+
         protected override void OnStop()
         {
             try
             {
-                alarmPlayer.Stop();
+                alarmPlayer.Pause();
             }
             catch
             {
