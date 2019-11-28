@@ -1,4 +1,39 @@
 <resources>
-    <string name="app_name">TwitchAlarmAndroid</string>
-    <string name="action_settings">Settings</string>
+  <string name="app_name">트위치 알림</string>
+  <string name="streamer_id">스트리머 ID</string>
+  <string name="streamer_name">스트리머 이름</string>
+  <string name="streamer_use_notify">이 스트리머의 알림 울리기</string>
+  <string name="streamer_prevent_popup">이 스트리머의 알림을 울릴때는 창을 바로 표시하지 않기</string>
+  <string name="streamer_sound_path">사용할 사운드 파일</string>
+  <string name="streamer_sound_preview">미리 재생</string>
+  <string name="streamer_sound_repeat_check">음성 알림의 반복 횟수</string>
+
+  <string name="select_audio_file">음악 선택</string>
+
+  <string name="save">저장</string>
+
+  <string name="notify_limit_exceeded">알림을 확인할 수 있는 스트리머의 최대치는 100명입니다.\r\n그것보다, 100명 이상의 스트리머의 방송 시작을 모닝콜로 사용하는 당신의 인생은 안녕하신가요...?</string>
+
+  <string name="must_save_before_set_notify_sound">알림음을 설정하려면, 일단 추가중인 정보를 저장해야 합니다.\r\n저장이 완료되면 아이디를 바꿀 수 없습니다. 계속 진행합니까?</string>
+  
+  <string name="exception_on_play_notify_sound">음악을 재생하려고 하는 도중, 알 수 없는 오류가 발생했습니다.</string>
+  <string name="no_sound_on_play_notify_sound">선택한 파일이 없습니다</string>
+
+  <string name="bad_streamer_id">스트리머 아이디가 잘못된것 같습니다</string>
+
+  <string name="left_second_for_refresh">다음 갱신까지 /TIME/초 남음</string>
+
+  <string name="notify_service_title">트위치 알림 서비스</string>
+  <string name="notify_service_text">트위치를 주기적으로 확인하고 있습니다</string>
+
+  <string name="add_title">추가하기</string>
+  <string name="edit_title">수정하기</string>
+  <string name="alarm_title">/NAME/ 님의 방송이 켜졌습니다!!</string>
+  <string name="ok">확인</string>
+  <string name="yes">네</string>
+  <string name="no">아니오</string>
+
+  <string name="preview_alarm">알림 미리보기</string>
+
+  <string name="action_settings">설정</string>
 </resources>

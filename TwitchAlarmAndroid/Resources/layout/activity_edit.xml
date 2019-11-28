@@ -1,0 +1,80 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="@string/streamer_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/streamerIdTextView" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerIdEditText" />
+    <TextView
+        android:text="@string/streamer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerNameTextView" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerNameEditText" />
+    <TextView
+        android:text="@string/streamer_sound_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerSoundPathTextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="@string/select_audio_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selectAudioFileButton" />
+
+        <Button
+            android:text="@string/streamer_sound_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/previewAudioFileButton" />
+
+    </LinearLayout>
+    <TextView
+        android:text="@string/streamer_sound_repeat_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerNotifyRepeatCountTextView" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerNotifyRepeatCountEditText" />
+    <CheckBox
+        android:text="@string/streamer_use_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerUseNotifyCheckBox" />
+    <CheckBox
+        android:text="@string/streamer_prevent_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/streamerPreventPopupCheckBox" />
+    <Button
+        android:text="@string/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButton" />
+    <Button
+        android:text="@string/preview_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/previewAlarmButton" />
+
+</LinearLayout>

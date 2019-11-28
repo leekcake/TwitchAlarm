@@ -88,9 +88,10 @@ namespace TwitchAlarmShared.Worker
             Streamers.Clear();
             try
             {
-                foreach (var path in PlatformUtils.Instance.GetFiles(Path.Combine(PlatformUtils.Instance.GetConfigBasePath(), "Streamers")))
+                var basePath = Path.Combine(PlatformUtils.Instance.GetConfigBasePath(), "Streamers");
+                foreach (var path in PlatformUtils.Instance.GetFiles(basePath))
                 {
-                    Streamers.Add(StreamerData.LoadFromBytes(PlatformUtils.Instance.ReadAllBytes(path)));
+                    Streamers.Add(StreamerData.LoadFromBytes(PlatformUtils.Instance.ReadAllBytes( Path.Combine(basePath, path) )));
                 }
             }
             catch

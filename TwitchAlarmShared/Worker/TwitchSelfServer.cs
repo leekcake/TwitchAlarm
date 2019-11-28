@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using EmbedIO;
+using EmbedIO.Actions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,22 +23,15 @@ namespace TwitchAlarmShared.Worker
 
         public void Start()
         {
-            server = new WebServer(this.SendResponse, twitchRedirectUri + "/");
-            server.Run();
-        }
+            server = new WebServer(o => o.WithUrlPrefix("http://*:8080/").WithMode(HttpListenerMode.EmbedIO));
+            server.WithModule(new ActionModule("/twitch/callback/", HttpVerbs.Any, ctx =>
+            {
+                TwitchAuthorizationApi(ctx.GetRequestQueryData()["code"]);
+                return ctx.SendDataAsync(new { Message = "<HTML><BODY>Thanks for allowing Twitch Alarm to authenticate :p<br></BODY></HTML>" });
+            }));
 
-        public string SendResponse(HttpListenerRequest request)
-        {
-            //We got the response, because this is authorization flow we need to do some more work with the code returned
-            //The function below does the final POST to Twitch to grab the oAuth data
-            //We expect one query parameter in the response which should be ?code= so we can easiy extract this from the request
-
-            this.TwitchAuthorizationApi(request.QueryString.GetValues("code")[0]);
-
-            //We need to put something "pretty" in our WebBrowser window to show the user they were Authorized
-            //This is in a string.Format as I was passing test values back to the page
-
-            return string.Format("<HTML><BODY>Thanks for allowing Twitch Alarm to authenticate :p<br></BODY></HTML>");
+            server.Start();
+            Debug.WriteLine("Web server started!!!");
         }
 
         public void TwitchAuthorizationApi(string code)
