@@ -22,6 +22,11 @@ using System.Threading.Tasks;
 using Android.Support.V4.Content;
 using Java.IO;
 using Android.Util;
+using TwitchAlarmShared.Worker;
+
+using Stream = System.IO.Stream;
+using TwitchAlarmAndroid.Container;
+using System.IO;
 
 namespace TwitchAlarmAndroid
 {
@@ -103,6 +108,21 @@ namespace TwitchAlarmAndroid
         {
             AlarmActivity.alarmTarget = streamerData;
             StartActivity(new Intent(this, typeof(AlarmActivity)));
+        }
+
+        protected override void OnDestroy()
+        {
+            streamerData = null;
+            try
+            {
+                previewPlayer.Dispose();
+            }
+            catch
+            {
+
+            }
+
+            base.OnDestroy();
         }
 
         private void UIToData()
@@ -230,10 +250,11 @@ namespace TwitchAlarmAndroid
                         });
                     }).Start();
                 });
-                builder.SetNegativeButton(Resource.String.yes, (ev, ct) =>
+                builder.SetNegativeButton(Resource.String.no, (ev, ct) =>
                 {
 
                 });
+                builder.Show();
                 return;
             }
             var intent = new Intent();
@@ -248,14 +269,14 @@ namespace TwitchAlarmAndroid
             {
                 if (resultCode == Result.Ok)
                 {
-                    streamerData.NotifySoundPath = GetActualPathFromFile(data.Data);
+                    SetNotifySoundPathWithUri(data.Data);
                     previewPlayer.Stop();
                 }
             }
             base.OnActivityResult(requestCode, resultCode, data);
         }
 
-        private string GetActualPathFromFile(Android.Net.Uri uri)
+        private void SetNotifySoundPathWithUri(Android.Net.Uri uri)
         {
             bool isKitKat = Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat;
 
@@ -272,7 +293,8 @@ namespace TwitchAlarmAndroid
 
                     if ("primary".Equals(type, StringComparison.OrdinalIgnoreCase))
                     {
-                        return Android.OS.Environment.ExternalStorageDirectory + "/" + split[1];
+                        streamerData.NotifySoundPath = Android.OS.Environment.ExternalStorageDirectory + "/" + split[1];
+                        return;
                     }
                 }
                 // DownloadsProvider
@@ -282,7 +304,8 @@ namespace TwitchAlarmAndroid
 
                     if (id != null && id.StartsWith("raw:"))
                     {
-                        return id.Substring(4);
+                        streamerData.NotifySoundPath = id.Substring(4);
+                        return;
                     }
 
                     String[] contentUriPrefixesToTry = new String[]{
@@ -299,11 +322,39 @@ namespace TwitchAlarmAndroid
                             String path = getDataColumn(this, contentUri, null, null);
                             if (path != null)
                             {
-                                return path;
+                                streamerData.NotifySoundPath = path;
+                                return;
                             }
                         }
                         catch (Exception e) { }
                     }
+
+                    var builder = new AlertDialog.Builder(this);
+                    builder.SetTitle(Resource.String.app_name);
+                    builder.SetMessage(Resource.String.need_to_copy_to_local);
+                    builder.SetPositiveButton(Resource.String.yes, (ev, ct) =>
+                    {
+                        try
+                        {
+                            Stream stream = ContentResolver.OpenInputStream(uri);
+                            var data = AndroidPlatformUtils.ReadFully(stream);
+                            stream.Close();
+                            var notify = Path.Combine(PlatformUtils.Instance.GetConfigBasePath(), "notify");
+                            PlatformUtils.Instance.EnsureDirectory(notify);
+                            streamerData.NotifySoundPath = Path.Combine(notify, streamerData.Id);
+                            PlatformUtils.Instance.WriteAllBytes(streamerData.NotifySoundPath, data);
+                        }
+                        catch
+                        {
+                            streamerData.NotifySoundPath = null;
+                        }
+                    });
+                    builder.SetNegativeButton(Resource.String.no, (ev, ct) =>
+                    {
+
+                    });
+                    builder.Show();
+                    return;
                 }
                 // MediaProvider
                 else if (isMediaDocument(uri))
@@ -335,7 +386,8 @@ namespace TwitchAlarmAndroid
                 split[1]
                     };
 
-                    return getDataColumn(this, contentUri, selection, selectionArgs);
+                    streamerData.NotifySoundPath = getDataColumn(this, contentUri, selection, selectionArgs);
+                    return;
                 }
             }
             // MediaStore (and general)
@@ -344,17 +396,19 @@ namespace TwitchAlarmAndroid
 
                 // Return the remote address
                 if (isGooglePhotosUri(uri))
-                    return uri.LastPathSegment;
-
-                return getDataColumn(this, uri, null, null);
+                {
+                    streamerData.NotifySoundPath = uri.LastPathSegment;
+                    return;
+                }
+                streamerData.NotifySoundPath = getDataColumn(this, uri, null, null);
+                return;
             }
             // File
             else if ("file".Equals(uri.Scheme, StringComparison.OrdinalIgnoreCase))
             {
-                return uri.Path;
+                streamerData.NotifySoundPath = uri.Path;
+                return;
             }
-
-            return null;
         }
 
         public static String getDataColumn(Context context, Android.Net.Uri uri, String selection, String[] selectionArgs)

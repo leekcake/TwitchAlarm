@@ -12,15 +12,31 @@ using Android.Widget;
 using Java.IO;
 using TwitchAlarmShared.Worker;
 
+using File = Java.IO.File;
 using Directory = System.IO.Directory;
 using Path = System.IO.Path;
 using DotNetFile = System.IO.File;
 using Java.Nio.FileNio;
+using System.IO;
 
 namespace TwitchAlarmAndroid.Container
 {
     public class AndroidPlatformUtils : PlatformUtils
     {
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
         private Context context;
         public AndroidPlatformUtils(Context context)
         {

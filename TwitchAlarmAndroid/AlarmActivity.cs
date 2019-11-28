@@ -53,6 +53,14 @@ namespace TwitchAlarmAndroid
 
         protected override void OnDestroy()
         {
+            try
+            {
+                alarmPlayer.Dispose();
+            }
+            catch
+            {
+
+            }
             base.OnDestroy();
         }
 
