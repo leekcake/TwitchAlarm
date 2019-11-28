@@ -12,6 +12,8 @@
 
   <string name="save">저장</string>
 
+  <string name="ask_for_twitch_login">트위치 알림의 원활한 작동을 위해, 트위치 인증이 필요합니다. 계속할까요?</string>
+
   <string name="notify_limit_exceeded">알림을 확인할 수 있는 스트리머의 최대치는 100명입니다.\r\n그것보다, 100명 이상의 스트리머의 방송 시작을 모닝콜로 사용하는 당신의 인생은 안녕하신가요...?</string>
 
   <string name="must_save_before_set_notify_sound">알림음을 설정하려면, 일단 추가중인 정보를 저장해야 합니다.\r\n저장이 완료되면 아이디를 바꿀 수 없습니다. 계속 진행합니까?</string>

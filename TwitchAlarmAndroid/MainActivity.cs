@@ -43,9 +43,10 @@ namespace TwitchAlarmAndroid
             streamerListView = FindViewById<ListView>(Resource.Id.streamerListView);
             leftTimeTextView = FindViewById<TextView>(Resource.Id.leftTimeTextView);
             streamerListView.ItemClick += StreamerListView_ItemClick;
+        }
 
-            StartService(new Android.Content.Intent(this, typeof(NotifyService)));
-
+        protected override void OnStart()
+        {
             NotifyService.OnServiceStart = new Action(() =>
             {
                 RunOnUiThread(() =>
@@ -67,7 +68,6 @@ namespace TwitchAlarmAndroid
                 });
             });
 
-
             var leftStr = GetString(Resource.String.left_second_for_refresh);
             NotifyService.OnTimeChanged = new Action<int>((time) =>
             {
@@ -77,13 +77,45 @@ namespace TwitchAlarmAndroid
                         leftTimeTextView.Text = leftStr.Replace("/TIME/", time.ToString());
                 });
             });
+
+            NotifyService.AskAuthHandler += new Func<bool>(() =>
+            {
+                bool? result = null;
+                RunOnUiThread(() =>
+                {
+                    var builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                    builder.SetTitle(Resource.String.app_name);
+                    builder.SetMessage(Resource.String.ask_for_twitch_login);
+                    builder.SetPositiveButton(Resource.String.yes, (ev, ct) =>
+                    {
+                        result = true;
+                    });
+                    builder.SetNegativeButton(Resource.String.no, (ev, ct) =>
+                    {
+                        result = false;
+                        Finish();
+                    });
+                    builder.SetCancelable(false);
+                    builder.Show();
+                });
+                while (!result.HasValue)
+                {
+
+                }
+                return result.Value;
+            });
+
+            StartService(new Android.Content.Intent(this, typeof(NotifyService)));
+            base.OnStart();
         }
 
-        protected override void OnDestroy()
+        protected override void OnStop()
         {
-            NotifyService.OnServiceStart = null;
+            NotifyService.AskAuthHandler = null;
+            NotifyService.OnTimeChanged = null;
             NotifyService.OnCheckPerformed = null;
-            base.OnDestroy();
+            NotifyService.OnServiceStart = null;
+            base.OnStop();
         }
 
         private void StreamerListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)

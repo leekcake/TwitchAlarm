@@ -25,17 +25,13 @@ namespace TwitchAlarmAndroid.Services
         }
 
         public static Action OnServiceStart;
+        public static Func<bool> AskAuthHandler;
         public static Action OnCheckPerformed;
         public static Action<int> OnTimeChanged;
         public static int RefreshTime { get; private set; } = -1;
         private bool IsAlive = true;
 
         Handler handler;
-
-        public static void MakeDetector()
-        {
-            Detector = new StreamerDetector();
-        }
 
         void StartForegroundService()
         {
@@ -79,6 +75,12 @@ namespace TwitchAlarmAndroid.Services
                 Detector.TryToReadToken();
                 if (Detector.TokenNotReady)
                 {
+                    if(!AskAuthHandler())
+                    {
+                        IsAlive = false;
+                        StopSelf();
+                        return;
+                    }
                     TwitchSelfServer self = new TwitchSelfServer();
                     self.Start();
 
@@ -116,10 +118,19 @@ namespace TwitchAlarmAndroid.Services
                     await Task.Delay(1000);
                     continue;
                 }
+                if (Detector.TokenNotReady)
+                {
+                    await Task.Delay(1000);
+                    continue;
+                }
                 await Detector.Check(fire);
                 OnCheckPerformed?.Invoke();
                 for (int i = 0; i < 30; i++)
                 {
+                    if(!IsAlive)
+                    {
+                        break;
+                    }
                     RefreshTime = 30 - i;
                     OnTimeChanged?.Invoke(RefreshTime);
                     await Task.Delay(1000);
@@ -130,6 +141,7 @@ namespace TwitchAlarmAndroid.Services
 
         public override void OnDestroy()
         {
+            Detector = null;
             IsAlive = false;
             base.OnDestroy();
         }
