@@ -141,7 +141,13 @@ namespace TwitchAlarmAndroid.Services
 
         public void OnBroadcastStartup(StreamerData data)
         {
-
+            handler.Post(() =>
+            {
+                AlarmActivity.alarmTarget = data;
+                var intent = new Intent(this, typeof(AlarmActivity));
+                intent.AddFlags(ActivityFlags.NewTask);
+                StartActivity(intent);
+            });
         }
     }
 }

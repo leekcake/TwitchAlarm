@@ -16,7 +16,7 @@ using TwitchAlarmShared.Worker;
 
 namespace TwitchAlarmAndroid
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, LaunchMode = Android.Content.PM.LaunchMode.SingleTop)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
     public class MainActivity : AppCompatActivity
     {
         private ListView streamerListView;

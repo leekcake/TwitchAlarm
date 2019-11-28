@@ -30,7 +30,7 @@ using System.IO;
 
 namespace TwitchAlarmAndroid
 {
-    [Activity(Label = "EditActivity", LaunchMode = Android.Content.PM.LaunchMode.SingleTop)]
+    [Activity(Label = "EditActivity", LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
     public class EditActivity : Activity
     {
         private const int AUDIO_REQUEST_CODE = 1;

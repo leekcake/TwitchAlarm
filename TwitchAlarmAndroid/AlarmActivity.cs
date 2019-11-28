@@ -16,7 +16,7 @@ using Uri = Android.Net.Uri;
 
 namespace TwitchAlarmAndroid
 {
-    [Activity(Label = "AlarmActivity", LaunchMode =Android.Content.PM.LaunchMode.SingleTop)]
+    [Activity(Label = "AlarmActivity", LaunchMode =Android.Content.PM.LaunchMode.SingleTask)]
     public class AlarmActivity : Activity
     {
         public static StreamerData alarmTarget;
