@@ -30,6 +30,8 @@
   <string name="notify_service_title">트위치 알림 서비스</string>
   <string name="notify_service_text">트위치를 주기적으로 확인하고 있습니다</string>
 
+  <string name="ask_for_delete">/NAME/ 스트리머를 목록에서 제거할까요?</string>
+
   <string name="add_title">추가하기</string>
   <string name="edit_title">수정하기</string>
   <string name="alarm_title">/NAME/ 님의 방송이 켜졌습니다!!</string>

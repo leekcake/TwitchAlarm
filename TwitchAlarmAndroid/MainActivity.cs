@@ -43,6 +43,26 @@ namespace TwitchAlarmAndroid
             streamerListView = FindViewById<ListView>(Resource.Id.streamerListView);
             leftTimeTextView = FindViewById<TextView>(Resource.Id.leftTimeTextView);
             streamerListView.ItemClick += StreamerListView_ItemClick;
+            streamerListView.ItemLongClick += StreamerListView_ItemLongClick;
+        }
+
+        private void StreamerListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
+        {
+            var streamerData = NotifyService.Detector.Streamers[e.Position];
+            var builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+            builder.SetTitle(Resource.String.app_name);
+            builder.SetMessage(GetString(Resource.String.ask_for_delete).Replace("/NAME/", streamerData.DisplayName));
+            builder.SetPositiveButton(Resource.String.yes, (ev, ct) =>
+            {
+                NotifyService.Detector.RemoveStreamerById(streamerData.Id);
+                streamerListAdapter = new ArrayAdapter<StreamerData>(this, Android.Resource.Layout.SimpleListItem1, NotifyService.Detector.Streamers);
+                streamerListView.Adapter = streamerListAdapter;
+            });
+            builder.SetNegativeButton(Resource.String.no, (ev, ct) =>
+            {
+
+            });
+            builder.Show();
         }
 
         protected override void OnStart()
@@ -63,7 +83,6 @@ namespace TwitchAlarmAndroid
                     if (streamerListAdapter != null)
                     {
                         streamerListAdapter.NotifyDataSetInvalidated();
-                        streamerListAdapter.NotifyDataSetChanged();
                     }
                 });
             });
@@ -133,8 +152,8 @@ namespace TwitchAlarmAndroid
         {
             try
             {
-                streamerListAdapter.NotifyDataSetInvalidated();
-                streamerListAdapter.NotifyDataSetChanged();
+                streamerListAdapter = new ArrayAdapter<StreamerData>(this, Android.Resource.Layout.SimpleListItem1, NotifyService.Detector.Streamers);
+                streamerListView.Adapter = streamerListAdapter;
             }
             catch
             {

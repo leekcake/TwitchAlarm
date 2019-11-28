@@ -72,6 +72,7 @@ namespace TwitchAlarmAndroid.Services
             new Task(() =>
             {
                 Detector = new StreamerDetector();
+                Detector.LoadStreamers();
                 Detector.TryToReadToken();
                 if (Detector.TokenNotReady)
                 {
@@ -101,7 +102,6 @@ namespace TwitchAlarmAndroid.Services
                     Detector.SetToken(self.ReceivedResponse);
                 }
                 Detector.StartListener = this;
-                Detector.LoadStreamers();
                 OnServiceStart?.Invoke();
             }).Start();
             Repeat();
@@ -118,7 +118,7 @@ namespace TwitchAlarmAndroid.Services
                     await Task.Delay(1000);
                     continue;
                 }
-                if (Detector.TokenNotReady)
+                if (Detector.TokenNotReady || Detector.Streamers.Count == 0)
                 {
                     await Task.Delay(1000);
                     continue;
