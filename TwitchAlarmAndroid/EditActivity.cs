@@ -138,7 +138,7 @@ namespace TwitchAlarmAndroid
             base.OnDestroy();
         }
 
-        private void UIToData()
+        private bool UIToData()
         {
             streamerData.Id = idEditText.Text;
             streamerData.DisplayName = nameEditText.Text;
@@ -148,10 +148,19 @@ namespace TwitchAlarmAndroid
             }
             else
             {
-                streamerData.NotifySoundRepeatCount = int.Parse(notifyRepeatCountEditText.Text);
+                try
+                {
+                    streamerData.NotifySoundRepeatCount = int.Parse(notifyRepeatCountEditText.Text);
+                }
+                catch
+                {
+                    Toast.MakeText(ApplicationContext, GetString(Resource.String.bad_repeat_count).Replace("/COUNT/", notifyRepeatCountEditText.Text), ToastLength.Long).Show();
+                    return false;
+                }
             }
             streamerData.UseNotify = useNotifyCheckBox.Checked;
             streamerData.PreventPopup = preventPopupCheckBox.Checked;
+            return true;
         }
 
         private bool Save()
@@ -174,7 +183,10 @@ namespace TwitchAlarmAndroid
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            UIToData();
+            if(!UIToData())
+            {
+                return;
+            }
             new Task(() =>
             {
                 var result = Save();
@@ -241,7 +253,10 @@ namespace TwitchAlarmAndroid
                 builder.SetMessage(Resource.String.must_save_before_set_notify_sound);
                 builder.SetPositiveButton(Resource.String.yes, (ev, ct) =>
                 {
-                    UIToData();
+                    if(!UIToData())
+                    {
+                        return;
+                    }                    
                     new Task(() =>
                     {
                         var result = Save();
