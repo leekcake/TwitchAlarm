@@ -10,7 +10,7 @@
     android:minWidth="25px"
     android:minHeight="25px">
     <TextView
-        android:text="@string/left_second_for_refresh"
+        android:text="@string/left_second_for_refresh_init"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

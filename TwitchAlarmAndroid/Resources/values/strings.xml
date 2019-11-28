@@ -23,6 +23,7 @@
   <string name="bad_streamer_id">스트리머 아이디가 잘못된것 같습니다</string>
 
   <string name="left_second_for_refresh">다음 갱신까지 /TIME/초 남음</string>
+  <string name="left_second_for_refresh_init">트위치 확인용 서비스와 연결중입니다</string>
 
   <string name="notify_service_title">트위치 알림 서비스</string>
   <string name="notify_service_text">트위치를 주기적으로 확인하고 있습니다</string>

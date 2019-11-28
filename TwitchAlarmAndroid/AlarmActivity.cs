@@ -27,12 +27,15 @@ namespace TwitchAlarmAndroid
         {
             base.OnCreate(savedInstanceState);
 
+            SetContentView(Resource.Layout.activity_alarm);
+
             Title = GetString(Resource.String.alarm_title).Replace("/NAME/", alarmTarget.DisplayName);
 
-            var button = new Button(this);
-            button.Text = GetString(Resource.String.ok);
+            var textview = FindViewById<TextView>(Resource.Id.titleTextView);
+            textview.Text = Title;
+
+            var button = FindViewById<Button>(Resource.Id.ok_button);
             button.Click += Button_Click;
-            SetContentView(button);
 
             try
             {

@@ -59,8 +59,11 @@ namespace TwitchAlarmAndroid
             {
                 RunOnUiThread(() =>
                 {
-                    if(streamerListAdapter != null)
+                    if (streamerListAdapter != null)
+                    {
                         streamerListAdapter.NotifyDataSetInvalidated();
+                        streamerListAdapter.NotifyDataSetChanged();
+                    }
                 });
             });
 
@@ -99,6 +102,7 @@ namespace TwitchAlarmAndroid
             try
             {
                 streamerListAdapter.NotifyDataSetInvalidated();
+                streamerListAdapter.NotifyDataSetChanged();
             }
             catch
             {
