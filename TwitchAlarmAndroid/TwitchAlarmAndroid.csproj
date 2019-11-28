@@ -67,6 +67,7 @@
     <Compile Include="AlarmActivity.cs" />
     <Compile Include="Container\AndroidPlatformUtils.cs" />
     <Compile Include="EditActivity.cs" />
+    <Compile Include="HelpActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

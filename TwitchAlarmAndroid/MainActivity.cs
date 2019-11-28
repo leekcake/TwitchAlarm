@@ -24,6 +24,9 @@ namespace TwitchAlarmAndroid
 
         private TextView leftTimeTextView;
 
+        private Button stopButton;
+        private Button helpButton;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -44,6 +47,23 @@ namespace TwitchAlarmAndroid
             leftTimeTextView = FindViewById<TextView>(Resource.Id.leftTimeTextView);
             streamerListView.ItemClick += StreamerListView_ItemClick;
             streamerListView.ItemLongClick += StreamerListView_ItemLongClick;
+
+            stopButton = FindViewById<Button>(Resource.Id.stop_button);
+            helpButton = FindViewById<Button>(Resource.Id.help_button);
+
+            stopButton.Click += StopButton_Click;
+            helpButton.Click += HelpButton_Click;
+        }
+
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
+            StartActivity(new Intent(ApplicationContext, typeof(HelpActivity)));
+        }
+
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            StopService(new Intent(ApplicationContext, typeof(NotifyService)));
+            Finish();
         }
 
         private void StreamerListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
