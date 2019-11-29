@@ -113,7 +113,26 @@ namespace TwitchAlarmAndroid
                 RunOnUiThread(() =>
                 {
                     if (leftTimeTextView != null)
-                        leftTimeTextView.Text = leftStr.Replace("/TIME/", time.ToString());
+                    {
+                        switch(time)
+                        {
+                            case NotifyService.TIME_IN_REFRESH:
+                                leftTimeTextView.Text = GetString(Resource.String.left_second_for_refresh_in_refresh);
+                                break;
+                            case NotifyService.TIME_NO_ACTIVE_STREAMER:
+                                leftTimeTextView.Text = GetString(Resource.String.no_active_streamer);
+                                break;
+                            case NotifyService.TIME_WAIT_FOR_STREAMER:
+                                leftTimeTextView.Text = GetString(Resource.String.wait_read_streamer_list);
+                                break;
+                            case NotifyService.TIME_WAIT_FOR_TOKEN:
+                                leftTimeTextView.Text = GetString(Resource.String.wait_token);
+                                break;
+                            default:
+                                leftTimeTextView.Text = leftStr.Replace("/TIME/", time.ToString());
+                                break;
+                        }
+                    }
                 });
             });
 

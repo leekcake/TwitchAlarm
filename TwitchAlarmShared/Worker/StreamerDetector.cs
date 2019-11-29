@@ -143,6 +143,11 @@ namespace TwitchAlarmShared.Worker
             return Streamers.FindAll(t => t.UseNotify).Count < 100;
         }
 
+        public int GetUseNotifyTotal()
+        {
+            return Streamers.FindAll(t => t.UseNotify).Count;
+        }
+
         public async Task Check(bool fire)
         {
             if (Streamers.Count == 0) return;
