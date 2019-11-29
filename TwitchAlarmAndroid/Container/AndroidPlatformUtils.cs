@@ -37,6 +37,20 @@ namespace TwitchAlarmAndroid.Container
             }
         }
 
+        public static byte[] ReadFully(Java.IO.InputStream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
         private Context context;
         public AndroidPlatformUtils(Context context)
         {
@@ -70,14 +84,19 @@ namespace TwitchAlarmAndroid.Container
             {
                 return null;
             }
-
-            return Files.ReadAllBytes(file.ToPath());
+            byte[] result;
+            var stream = new FileInputStream(file);
+            result = ReadFully(stream);
+            stream.Close();
+            return result;
         }
 
         public override void WriteAllBytes(string path, byte[] data)
         {
             var file = new File(path);
-            Files.Write(file.ToPath(), data);
+            var output = new FileOutputStream(file, false);
+            output.Write(data);
+            output.Close();
         }
     }
 }
