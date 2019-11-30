@@ -233,6 +233,7 @@ namespace TwitchAlarmAndroid
                     var builder = new AudioAttributes.Builder();
                     builder.SetContentType(AudioContentType.Music);
                     builder.SetUsage(AudioUsageKind.Alarm);
+                    previewPlayer.SetAudioAttributes(builder.Build());
                     previewPlayer.SetDataSource(streamerData.NotifySoundPath); //SetDataSource(ApplicationContext, Uri.Parse(streamerData.NotifySoundPath));
                     previewPlayer.Prepare();
                     previewPlayer.Start();
