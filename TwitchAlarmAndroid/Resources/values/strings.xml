@@ -52,6 +52,9 @@
 
   <string name="action_settings">설정</string>
 
+  <string name="permission_read_storage_description">트위치 알림이 저장소에 있는 알림음 파일에 접근해 재생하기 위해서, 저장소 읽기 권한이 필요합니다</string>
+  <string name="permission_internet_description">트위치 알림이 트위치와 통신해 스트리머의 상태를 확인해기 위해서, 인터넷 권한이 필요합니다.</string>
+
   <string name="help_description">
      메인화면 오른쪽 하단에 있는 추가 버튼을 통해 스트리머를 추가할 수 있습니다\n
     목록에서 원하는 스트리머를 터치해서 정보를 수정할 수 있습니다\n

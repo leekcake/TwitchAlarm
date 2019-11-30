@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Android;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
@@ -13,10 +17,11 @@ using TwitchAlarmAndroid.Container;
 using TwitchAlarmAndroid.Services;
 using TwitchAlarmShared.Container;
 using TwitchAlarmShared.Worker;
+using static Android.Support.V4.App.ActivityCompat;
 
 namespace TwitchAlarmAndroid
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
     public class MainActivity : AppCompatActivity
     {
         private ListView streamerListView;
@@ -30,7 +35,6 @@ namespace TwitchAlarmAndroid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             var util = new AndroidPlatformUtils(ApplicationContext);
             PlatformUtils.Instance = util;

@@ -4179,12 +4179,6 @@ namespace TwitchAlarmAndroid
 			// aapt resource value: 0x7F0D0000
 			public const int ic_launcher = 2131558400;
 			
-			// aapt resource value: 0x7F0D0001
-			public const int ic_launcher_foreground = 2131558401;
-			
-			// aapt resource value: 0x7F0D0002
-			public const int ic_launcher_round = 2131558402;
-			
 			static Mipmap()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -4427,55 +4421,61 @@ namespace TwitchAlarmAndroid
 			public const int path_password_strike_through = 2131624011;
 			
 			// aapt resource value: 0x7F0E004C
-			public const int preview_alarm = 2131624012;
+			public const int permission_internet_description = 2131624012;
 			
 			// aapt resource value: 0x7F0E004D
-			public const int save = 2131624013;
+			public const int permission_read_storage_description = 2131624013;
 			
 			// aapt resource value: 0x7F0E004E
-			public const int search_menu_title = 2131624014;
+			public const int preview_alarm = 2131624014;
 			
 			// aapt resource value: 0x7F0E004F
-			public const int select_audio_file = 2131624015;
+			public const int save = 2131624015;
 			
 			// aapt resource value: 0x7F0E0050
-			public const int status_bar_notification_info_overflow = 2131624016;
+			public const int search_menu_title = 2131624016;
 			
 			// aapt resource value: 0x7F0E0051
-			public const int stop_button = 2131624017;
+			public const int select_audio_file = 2131624017;
 			
 			// aapt resource value: 0x7F0E0052
-			public const int streamer_id = 2131624018;
+			public const int status_bar_notification_info_overflow = 2131624018;
 			
 			// aapt resource value: 0x7F0E0053
-			public const int streamer_name = 2131624019;
+			public const int stop_button = 2131624019;
 			
 			// aapt resource value: 0x7F0E0054
-			public const int streamer_prevent_popup = 2131624020;
+			public const int streamer_id = 2131624020;
 			
 			// aapt resource value: 0x7F0E0055
-			public const int streamer_sound_path = 2131624021;
+			public const int streamer_name = 2131624021;
 			
 			// aapt resource value: 0x7F0E0056
-			public const int streamer_sound_preview = 2131624022;
+			public const int streamer_prevent_popup = 2131624022;
 			
 			// aapt resource value: 0x7F0E0057
-			public const int streamer_sound_repeat_check = 2131624023;
+			public const int streamer_sound_path = 2131624023;
 			
 			// aapt resource value: 0x7F0E0058
-			public const int streamer_use_notify = 2131624024;
+			public const int streamer_sound_preview = 2131624024;
 			
 			// aapt resource value: 0x7F0E0059
-			public const int wait_for_fetcher = 2131624025;
+			public const int streamer_sound_repeat_check = 2131624025;
 			
 			// aapt resource value: 0x7F0E005A
-			public const int wait_read_streamer_list = 2131624026;
+			public const int streamer_use_notify = 2131624026;
 			
 			// aapt resource value: 0x7F0E005B
-			public const int wait_token = 2131624027;
+			public const int wait_for_fetcher = 2131624027;
 			
 			// aapt resource value: 0x7F0E005C
-			public const int yes = 2131624028;
+			public const int wait_read_streamer_list = 2131624028;
+			
+			// aapt resource value: 0x7F0E005D
+			public const int wait_token = 2131624029;
+			
+			// aapt resource value: 0x7F0E005E
+			public const int yes = 2131624030;
 			
 			static String()
 			{
