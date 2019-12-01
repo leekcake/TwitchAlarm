@@ -23,6 +23,7 @@
   <string name="no_sound_on_play_notify_sound">선택한 파일이 없습니다</string>
 
   <string name="bad_streamer_id">스트리머 아이디가 잘못된것 같습니다</string>
+  <string name="empty_streamer_id">스트리머 아이디는 반드시 입력해야 합니다</string>
   <string name="bad_repeat_count">/COUNT/는 무한 혹은 적절한 숫자여야합니다.</string>
 
   <string name="left_second_for_refresh">다음 갱신까지 /TIME/초 남음</string>

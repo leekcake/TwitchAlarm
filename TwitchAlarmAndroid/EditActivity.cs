@@ -52,6 +52,25 @@ namespace TwitchAlarmAndroid
 
         private MediaPlayer previewPlayer = new MediaPlayer();
 
+        /// <summary>
+        /// 실제 스트리머를 베이스로 한 아이디 샘플
+        /// 이 리스트는 새 항목이 추가될때마다 랜덤하게 섞어야 합니다.
+        /// </summary>
+        private static readonly string[] ID_AND_NAME_SAMPLES = new string[] {
+            "뽀큐단의 주인공 뽀카링", "pocari_on",
+            "견자희 스튜디오", "wkgml",
+            "잔잔한 이렛_", "layered20",
+            "연퐁이네 행복마을 이장 이연순", "e_yeon",
+            "탄빵베이커리 주인 빵룽", "roong__",
+            "다도방 주인 도화님", "dohwa_0904",
+            "무지개 나라속 유닉혼", "lilac_unicorn_",
+            "헨타 이초홍씨", "h920103",
+            "정육점 주인 츄즈미_", "chplease",
+            "豆묘송이", "myosonge",
+            "새장속 노페토리", "nopetori",
+            "뿅뿅단을 이끄는 뿅아가", "rupin074"
+        };
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -61,6 +80,15 @@ namespace TwitchAlarmAndroid
 
             idEditText = FindViewById<EditText>(Resource.Id.streamerIdEditText);
             nameEditText = FindViewById<EditText>(Resource.Id.streamerNameEditText);
+
+            var random = (new Random().Next(ID_AND_NAME_SAMPLES.Length / 2) * 2) - 2;
+            if(random < 0)
+            {
+                random = 0;
+            }
+            idEditText.Hint = ID_AND_NAME_SAMPLES[random + 1];
+            nameEditText.Hint = ID_AND_NAME_SAMPLES[random];
+
             notifyRepeatCountEditText = FindViewById<EditText>(Resource.Id.streamerNotifyRepeatCountEditText);
 
             selectAudioFileButton = FindViewById<Button>(Resource.Id.selectAudioFileButton);
@@ -140,6 +168,12 @@ namespace TwitchAlarmAndroid
 
         private bool UIToData()
         {
+            if(idEditText.Text.Trim() == "")
+            {
+                Toast.MakeText(ApplicationContext, Resource.String.empty_streamer_id, ToastLength.Long).Show();
+                return false;
+            } 
+
             streamerData.Id = idEditText.Text;
             streamerData.DisplayName = nameEditText.Text;
             if (notifyRepeatCountEditText.Text == "무한")
