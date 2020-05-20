@@ -201,7 +201,7 @@ namespace TwitchAlarmAndroid
         {
             try
             {
-                streamerData.InternalId = NotifyService.Detector.Twitch.Helix.Users.GetUsersAsync(logins: new List<string>(new string[] { streamerData.Id })).Result.Users[0].Id;
+                streamerData.InternalId = NotifyService.Detector.Twitch.V5.Users.GetUserByNameAsync(streamerData.Id).Result.Matches[0].Id;
             }
             catch
             {
