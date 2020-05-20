@@ -151,39 +151,29 @@ namespace TwitchAlarmShared.Worker
         public async Task Check(bool fire)
         {
             if (Streamers.Count == 0) return;
-            try
+            foreach(var streamer in Streamers)
             {
-                var response = await Twitch.Helix.Streams.GetStreamsAsync(userLogins: new List<string>(Streamers.FindAll(t => t.UseNotify).Select(t => t.Id)));
-                foreach (var stream in response.Streams)
+                try
                 {
-                    var data = Streamers.Find(t => t.InternalId == stream.UserId);
-                    data.IsLiveDetectedOnTick = true;
-                    if(!data.IsInBroadcasting)
+                    var stream = await Twitch.V5.Streams.GetStreamByUserAsync(streamer.InternalId);
+                    if(stream.Stream != null)
                     {
-                        data.IsInBroadcasting = true;
-                        if(fire)
-                            StartListener?.OnBroadcastStartup(data);
-                    }
-                }
-
-                foreach(var streamer in Streamers)
-                {
-                    if(streamer.IsLiveDetectedOnTick)
-                    {
-                        streamer.IsLiveDetectedOnTick = false;
-                    }
+                        if (!streamer.IsInBroadcasting)
+                        {
+                            streamer.IsInBroadcasting = true;
+                            if (fire)
+                                StartListener?.OnBroadcastStartup(streamer);
+                        }
+                    } 
                     else
                     {
-                        if(streamer.IsInBroadcasting)
-                        {
-                            streamer.IsInBroadcasting = false;
-                        }
+                        streamer.IsInBroadcasting = false;
                     }
                 }
-            }
-            catch
-            {
-
+                catch (Exception ex)
+                {
+                    var dummy = ex.Message;
+                }
             }
         }
     }

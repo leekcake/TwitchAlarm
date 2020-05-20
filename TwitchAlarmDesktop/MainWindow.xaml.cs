@@ -244,7 +244,7 @@ namespace TwitchAlarmDesktop
             {
                 streamer.InternalId = detector.Twitch.Helix.Users.GetUsersAsync(logins: new List<string>(new string[] { streamer.Id })).Result.Users[0].Id;
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBox.Show("대상 아이디의 정보를 트위치에서 가져올 수 없었습니다", "트위치 알림");
                 return;
@@ -266,6 +266,10 @@ namespace TwitchAlarmDesktop
 
         private void LoadSelectedIntoUI()
         {
+            if(selectedData == null)
+            {
+                return;
+            }
             Idlabel.Content = $"스트리머 아이디: {selectedData.Id}";
             DisplayNameLabel.Content = $"스트리머 이름: {selectedData.DisplayName}";
             NotifySoundPathLabel.Content = $"알림음 파일: { Path.GetFileName(selectedData.NotifySoundPath) }";
