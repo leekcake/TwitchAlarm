@@ -155,8 +155,10 @@ namespace TwitchAlarmShared.Worker
             {
                 try
                 {
-                    var stream = await Twitch.V5.Streams.GetStreamByUserAsync(streamer.InternalId);
-                    if(stream.Stream != null)
+                    var logins = new List<string>();
+                    logins.Add(streamer.Id);
+                    var stream = await Twitch.Helix.Streams.GetStreamsAsync(userLogins: logins);
+                    if(stream.Streams.Count() != 0 && stream.Streams[0].Type == "live")
                     {
                         if (!streamer.IsInBroadcasting)
                         {

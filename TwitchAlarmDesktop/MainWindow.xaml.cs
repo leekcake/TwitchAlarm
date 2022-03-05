@@ -242,7 +242,7 @@ namespace TwitchAlarmDesktop
             }
             try
             {
-                streamer.InternalId = detector.Twitch.V5.Users.GetUserByNameAsync(streamer.Id).Result.Matches[0].Id;
+                streamer.InternalId = detector.Twitch.Helix.Users.GetUsersAsync(logins:new string[] { streamer.Id }.ToList()).Result.Users[0].Id;
             }
             catch (Exception ex)
             {

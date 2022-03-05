@@ -214,6 +214,31 @@ namespace TwitchAlarmAndroid
                 builder.Show();
             }
 
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+            {
+                PowerManager pm = (PowerManager)Android.App.Application.Context.GetSystemService(Context.PowerService);
+                bool result = pm.IsIgnoringBatteryOptimizations("moe.leekcake.twitch.alarm");
+
+                if (!result)
+                {
+                    var builder = new AlertDialog.Builder(this)
+                            .SetTitle("권한 요청")
+                            .SetMessage("이 어플리케이션이 배터리 최적화 대상입니다. 알림이 제대로 울리지 않을 수 있습니다.\r\n최적화 목록에서 제외 하시겠습니까?")
+                            .SetCancelable(true)
+                            .SetNegativeButton("취소", (ev, ct) =>
+                            {
+
+                            })
+                            .SetPositiveButton("승인하러 가기", (ev, ct) =>
+                            {
+                                Intent intent = new Intent();
+                                intent.SetAction(Android.Provider.Settings.ActionIgnoreBatteryOptimizationSettings);
+                                StartActivity(intent);
+                            });
+                    builder.Show();
+                }
+            }
+
             try
             {
                 streamerListAdapter = new ArrayAdapter<StreamerData>(this, Android.Resource.Layout.SimpleListItem1, NotifyService.Detector.Streamers);
