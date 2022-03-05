@@ -5,7 +5,9 @@ using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Net;
 using Android.OS;
+using Android.Provider;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.App;
@@ -18,6 +20,7 @@ using TwitchAlarmAndroid.Services;
 using TwitchAlarmShared.Container;
 using TwitchAlarmShared.Worker;
 using static Android.Support.V4.App.ActivityCompat;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace TwitchAlarmAndroid
 {
@@ -193,6 +196,24 @@ namespace TwitchAlarmAndroid
 
         protected override void OnResume()
         {
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.P && !Settings.CanDrawOverlays(this))
+            {
+                var builder = new AlertDialog.Builder(this)
+                    .SetTitle("권한 요청")
+                    .SetMessage("이 기기는 화면이 꺼져있을 때 알림을 울리기 위해서 권한이 필요합니다.\r\n승인하시겠습니까?")
+                    .SetCancelable(true)
+                    .SetNegativeButton("취소", (ev, ct) =>
+                    {
+
+                    })
+                    .SetPositiveButton("승인하러 가기", (ev, ct) =>
+                    {
+                        var intent = new Intent(Settings.ActionManageOverlayPermission, Android.Net.Uri.Parse($"package:{PackageName}"));
+                        StartActivity(intent);
+                    });
+                builder.Show();
+            }
+
             try
             {
                 streamerListAdapter = new ArrayAdapter<StreamerData>(this, Android.Resource.Layout.SimpleListItem1, NotifyService.Detector.Streamers);

@@ -28,10 +28,22 @@ namespace TwitchAlarmAndroid
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.activity_alarm);
-            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
-                WindowManagerFlags.DismissKeyguard |
-                WindowManagerFlags.ShowWhenLocked |
-                WindowManagerFlags.TurnScreenOn);
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.OMr1)
+            {
+                SetShowWhenLocked(true);
+                SetTurnScreenOn(true);
+                var keyguardManager = GetSystemService(Context.KeyguardService) as KeyguardManager;
+                keyguardManager.RequestDismissKeyguard(this, null);
+                Window.AddFlags(WindowManagerFlags.KeepScreenOn);
+            }
+            else
+            {
+                Window.AddFlags(WindowManagerFlags.KeepScreenOn |
+                    WindowManagerFlags.DismissKeyguard |
+                    WindowManagerFlags.ShowWhenLocked |
+                    WindowManagerFlags.TurnScreenOn);
+            }
+
 
             Title = GetString(Resource.String.alarm_title).Replace("/NAME/", alarmTarget.DisplayName);
 

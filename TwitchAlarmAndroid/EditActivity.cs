@@ -57,17 +57,18 @@ namespace TwitchAlarmAndroid
         /// 이 리스트는 새 항목이 추가될때마다 랜덤하게 섞어야 합니다.
         /// </summary>
         private static readonly string[] ID_AND_NAME_SAMPLES = new string[] {
-            "뽀큐단의 주인공 뽀카링", "pocari_on",
+            //"뽀큐단의 주인공 뽀카링", "pocari_on",
             "견자희 스튜디오", "wkgml",
-            "잔잔한 이렛_", "layered20",
+            //"잔잔한 이렛_", "layered20",
             "연퐁이네 행복마을 이장 이연순", "e_yeon",
             "탄빵베이커리 주인 빵룽", "roong__",
-            "다도방 주인 도화님", "dohwa_0904",
+            //"다도방 주인 도화님", "dohwa_0904",
+            "정병소녀", "ghghgigi",
             "무지개 나라속 유닉혼", "lilac_unicorn_",
             "헨타 이초홍씨", "h920103",
-            "정육점 주인 츄즈미_", "chplease",
+            //"정육점 주인 츄즈미_", "chplease",
             "豆묘송이", "myosonge",
-            "새장속 노페토리", "nopetori",
+            //"새장속 노페토리", "nopetori",
             "뿅뿅단을 이끄는 뿅아가", "rupin074"
         };
 

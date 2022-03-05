@@ -27,7 +27,7 @@ namespace TwitchAlarmShared.Worker
             server.WithModule(new ActionModule("/twitch/callback/", HttpVerbs.Any, ctx =>
             {
                 TwitchAuthorizationApi(ctx.GetRequestQueryData()["code"]);
-                return ctx.SendDataAsync(new { Message = "<HTML><BODY>Thanks for allowing Twitch Alarm to authenticate :p<br></BODY></HTML>" });
+                return ctx.SendDataAsync(new { Message = "인증을 해 주셔서 감사합니다, 앱으로 돌아가서 인증상태를 확인하세요!" });
             }));
 
             server.Start();

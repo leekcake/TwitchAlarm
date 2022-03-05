@@ -155,6 +155,9 @@ namespace TwitchAlarmAndroid.Services
         public async Task Repeat()
         {
             bool fire = false;
+            var pm = (PowerManager) GetSystemService(PowerService);
+            var wakelock = pm.NewWakeLock(WakeLockFlags.Partial, "TwitchAlarm");
+            wakelock.Acquire();
             while (IsAlive)
             {
                 if (Detector == null)
@@ -200,6 +203,7 @@ namespace TwitchAlarmAndroid.Services
                 }
                 fire = true;
             }
+            wakelock.Release();
         }
 
         public override void OnDestroy()

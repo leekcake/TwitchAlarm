@@ -23,7 +23,9 @@ namespace TwitchAlarmDesktop.Container
 
         public override string GetConfigBasePath()
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config");
+            EnsureDirectory(path);
+            return path;
         }
 
         public override string[] GetFiles(string path)
